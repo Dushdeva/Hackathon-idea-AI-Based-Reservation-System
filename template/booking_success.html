@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Booking Confirmed{% endblock %}
+{% block content %}
+<div class="success">
+    <h2>Congratulations !!!!!!!!!{{ message }}</h2>
+    <p><strong>Booking ID:</strong> {{ booking_id }}</p>
+    <p><strong>Train:</strong> {{ train_name }} ({{ train_no }})</p>
+    <p><strong>Status:</strong> {{ status|upper }} 
+    {% if waiting_number > 0 %} - Waiting Position: {{ waiting_number }}{% endif %}
+    </p>
+    {% if used_wallet %}
+        <p><strong>Fare Paid:</strong> ₹{{ fare }} (via Wallet)</p>
+        <p><strong>New Balance:</strong> ₹{{ balance }}</p>
+    {% endif %}
+</div>
+<a href="/my-bookings" class="btn">View My Bookings</a>
+<a href="/" class="btn btn-green">Home</a>
+
+{% if status == 'waiting' %}
+<div class="card" style="margin-top:20px">
+    <h3>AI Prediction for Your Waiting Ticket</h3>
+    <button id="predictWaitBtn" class="btn">Check Confirmation Probability</button>
+    <div id="waitPrediction"></div>
+</div>
+<script>
+document.getElementById('predictWaitBtn').onclick = function() {
+    fetch('/predict', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `train_no={{ train_no }}&waiting_number={{ waiting_number }}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('waitPrediction').innerHTML = `
+            <div class="success" style="margin-top:15px">
+                AI says: ${data.probability}% confirmation chance<br>
+                💡 ${data.advice}
+            </div>
+        `;
+    });
+};
+</script>
+{% endif %}
+{% endblock %}
