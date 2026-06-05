@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Train Details{% endblock %}
+{% block content %}
+<h2>{{ train[1] }} ({{ train[0] }})</h2>
+<div class="card">
+    <p><strong>Route:</strong> {{ train[2] }} → {{ train[3] }}</p>
+    <p><strong>Available Seats:</strong> {{ train[4] }}</p>
+    <p><strong>Waiting List Count:</strong> {{ train[5] }}</p>
+    <p><strong>Base Fare:</strong> ₹{{ train[6] }}</p>
+    <p><strong>Tatkal Quota Left:</strong> {{ train[7] }}</p>
+    <p><strong>Popularity Score:</strong> {{ (train[8]*100)|int }}%</p>
+</div>
+<a href="/book/{{ train[0] }}" class="btn">Book This Train</a>
+<a href="/tatkal/{{ train[0] }}" class="btn" style="background:#feca57;color:#333">Tatkal Booking</a>
+<a href="/search" class="btn btn-green">Back to Search</a>
+{% endblock %}
