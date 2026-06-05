@@ -2,6 +2,8 @@
 
 ## Project Overview
 
+<!--What we think it will look like if we tried to make an app but it will be web based so this is just basis but will definitely not look and complete all these because it will take a lot of time and money which I don't really have especially money-->
+
 The AI-based Railway Reservation System is a comprehensive multi-platform solution that leverages machine learning algorithms and graph traversal techniques to provide intelligent railway booking services. The system predicts alternate routes, seat availability, and implements automated Tatkal booking using blockchain-based wallet functionality.
 
 ## System Architecture
