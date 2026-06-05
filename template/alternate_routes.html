@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Alternate Routes{% endblock %}
+{% block content %}
+<h2>Alternate Routes (Graph Traversal Demo)</h2>
+<p>Finding creative ways from <strong>{{ source }}</strong> to <strong>{{ destination }}</strong>...</p>
+{% for route in alternates %}
+<div class="card">
+    <h3>Option {{ loop.index }}</h3>
+    <p><strong>Route:</strong> {{ route.route }}</p>
+    <p><strong>Stops:</strong> {{ route.stops }} | <strong>Est. Duration:</strong> {{ route.duration_hrs }} hrs</p>
+    <p><strong>Change at:</strong> {{ route.change_at }}</p>
+    <button class="btn" style="background:#feca57;color:#333" onclick="alert('Booking for alternate route coming soon! Use normal search.')">Book This Route</button>
+</div>
+{% endfor %}
+<p><small>Real graph algorithm coming in next hyperfocus session.</small></p>
+<a href="/" class="btn">Back to Search</a>
+{% endblock %}
