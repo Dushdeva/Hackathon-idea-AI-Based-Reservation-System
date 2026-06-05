@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Home - Search Trains{% endblock %}
+{% block content %}
+<h2>🔍 Search Trains</h2>
+<p>Find trains between stations (supports partial names)</p>
+
+<div class="card">
+    <form method="POST" action="/search">
+        <label>📍 From (Source):</label>
+        <input type="text" name="source" placeholder="e.g., Delhi, Mumbai, Kolkata" required>
+        
+        <label>🎯 To (Destination):</label>
+        <input type="text" name="destination" placeholder="e.g., Jaipur, Chennai, Bengaluru" required>
+        
+        <button type="submit" class="btn">🔎 Search Trains</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>✨ AI Quick Prediction Demo</h3>
+    <p>Try our ADHD-trained AI to check waiting list confirmation probability:</p>
+    <input type="text" id="ai_train_no" placeholder="Train Number (e.g., 12015)">
+    <input type="number" id="ai_waiting" placeholder="Waiting Number">
+    <button class="btn btn-green" onclick="predictSeat()">🤖 AI Predict</button>
+    <div id="ai_result" style="margin-top: 15px; font-weight: bold;"></div>
+</div>
+
+<script>
+function predictSeat() {
+    let trainNo = document.getElementById('ai_train_no').value;
+    let waiting = document.getElementById('ai_waiting').value;
+    if(!trainNo || !waiting) {
+        alert("Please enter both Train No and Waiting Number!");
+        return;
+    }
+    fetch('/predict', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `train_no=${trainNo}&waiting_number=${waiting}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('ai_result').innerHTML = `
+            <div class="success">
+                🤖 AI Prediction: ${data.probability}% chance of confirmation<br>
+                📝 Advice: ${data.advice}<br>
+                🧠 Model: ${data.model_used}
+            </div>
+        `;
+    })
+    .catch(err => {
+        document.getElementById('ai_result').innerHTML = '<div class="error">AI crashed! (maybe too much coffee)</div>';
+    });
+}
+</script>
+
+<div class="card">
+    <h3>⚡ Quick Tatkal Booking</h3>
+    <p>Limited quota, higher fare, instant confirmation (if quota available)</p>
+    <form action="/tatkal/12414" method="GET" style="display:inline">
+        <button type="submit" class="btn">Try Tatkal on Rajdhani</button>
+    </form>
+    <span style="margin:0 10px">or</span>
+    <input type="text" id="tatkal_train" placeholder="Enter Train No" style="width:150px;display:inline-block">
+    <button class="btn" onclick="tatkalRedirect()">Tatkal Book</button>
+</div>
+
+<script>
+function tatkalRedirect() {
+    let train = document.getElementById('tatkal_train').value;
+    if(train) window.location.href = `/tatkal/${train}`;
+    else alert("Enter train number!");
+}
+</script>
+{% endblock %}
