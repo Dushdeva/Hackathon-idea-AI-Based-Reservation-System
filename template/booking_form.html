@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Book {{ train[1] }}{% endblock %}
+{% block content %}
+<h2>Book Ticket - {{ train[1] }} ({{ train[0] }})</h2>
+<div class="card">
+    <p><strong>From:</strong> {{ train[2] }} → <strong>To:</strong> {{ train[3] }}</p>
+    <p><strong>Available Seats:</strong> {{ train[4] }} | <strong>Fare:</strong> ₹{{ train[6] }}</p>
+    <p><strong>Tatkal Quota Left:</strong> {{ train[7] }}</p>
+</div>
+
+<form method="POST">
+    <label>Passenger Name:</label>
+    <input type="text" name="passenger_name" required>
+    
+    <label>Age:</label>
+    <input type="number" name="passenger_age" value="25" min="1" max="120">
+    
+    <label>
+        <input type="checkbox" name="use_wallet"> Use Wallet (Current Balance: ₹{{ balance }})
+    </label>
+    
+    <button type="submit" class="btn">Confirm Booking</button>
+    <a href="/search" class="btn btn-green" style="background:#ccc;color:#333">Cancel</a>
+</form>
+{% endblock %}
