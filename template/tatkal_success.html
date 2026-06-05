@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Tatkal Booking Success{% endblock %}
+{% block content %}
+<div class="success" style="background:#fff3cd;border-left-color:#f0ad4e">
+    <h2>TATKAL BOOKING CONFIRMED!</h2>
+    <p><strong>Train:</strong> {{ train_name }} ({{ train_no }})</p>
+    <p><strong>Booking ID:</strong> {{ booking_id }}</p>
+    <p><strong>Fare Paid (Tatkal):</strong> ₹{{ fare }}</p>
+    <p><strong>Wallet Balance:</strong> ₹{{ balance }}</p>
+    <p>Seat instantly confirmed under Tatkal quota!</p>
+</div>
+<a href="/my-bookings" class="btn">View Booking</a>
+<a href="/" class="btn btn-green">Home</a>
+{% endblock %}
+
+<!--This ain't ever happening bro-->
