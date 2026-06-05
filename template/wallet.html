@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Wallet{% endblock %}
+{% block content %}
+<h2>Digital Wallet (Blockchain Inspired™)</h2>
+<div class="card" style="text-align:center">
+    <h3>Current Balance: <span style="color:#2ed573;font-size:2rem">₹{{ balance }}</span></h3>
+    <form method="POST" action="/add-money" style="display:flex;gap:10px;justify-content:center;margin-top:15px">
+        <input type="number" name="amount" placeholder="Amount to add" min="1" max="10000" required style="width:200px">
+        <button type="submit" class="btn btn-green">Add Money</button>
+    </form>
+</div>
+
+<h3>Recent Transactions</h3>
+{% if transactions %}
+    <table>
+        <thead><tr><th>Amount</th><th>Type</th><th>Time</th></tr></thead>
+        <tbody>
+        {% for t in transactions %}
+            <tr>
+                <td style="color:{% if t[1]=='recharge' %}green{% else %}red{% endif %}">₹{{ t[0] }}</td>
+                <td>{{ t[1] }}</td>
+                <td>{{ t[2][:19] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="error">No transactions yet. Add some money!</div>
+{% endif %}
+{% endblock %}
