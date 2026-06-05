@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+<h2>Your Recent Bookings</h2>
+{% if bookings %}
+    <table>
+        <thead><tr><th>ID</th><th>Train</th><th>Name</th><th>Status</th><th>Wait#</th><th>Date</th><th>Action</th></tr></thead>
+        <tbody>
+        {% for b in bookings %}
+            <tr>
+                <td>{{ b[0] }}</td>
+                <td>{{ b[1] }} - {{ b[2] }}</td>
+                <td>{{ b[3] }}</td>
+                <td style="color:{% if b[4]=='confirmed' %}green{% else %}orange{% endif %}">{{ b[4] }}</td>
+                <td>{{ b[5] if b[5]>0 else '-' }}</td>
+                <td>{{ b[6][:10] }}</td>
+                <td><a href="/cancel/{{ b[0] }}" onclick="return confirm('Cancel booking?')" style="color:red">Cancel</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="error">No bookings found. Book a train first!</div>
+{% endif %}
+<a href="/" class="btn">Book Train</a>
+{% endblock %}
