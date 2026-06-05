@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+<h2>Trains from {{ source }} to {{ destination }}</h2>
+{% if trains %}
+    <table>
+        <thead>
+            <tr><th>Train No</th><th>Name</th><th>Available Seats</th><th>Fare (₹)</th><th>Waiting List</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+        {% for train in trains %}
+            <tr>
+                <td>{{ train[0] }}</td>
+                <td>{{ train[1] }}</td>
+                <td>{{ train[4] }}</td>
+                <td>₹{{ train[5] }}</td>
+                <td>{{ train[6] }}</td>
+                <td><a href="/book/{{ train[0] }}" class="btn" style="padding:5px 12px">Book Now</a>
+                <a href="/train/{{ train[0] }}" style="margin-left:10px">Details</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="error">No trains found for this route. Try different stations or check spelling!</div>
+{% endif %}
+<a href="/" class="btn btn-green">← New Search</a>
+{% endblock %}
